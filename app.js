@@ -1,7 +1,12 @@
 var Root = function() {};
 var Child = function() {};
 
-Child.prototype = Object.create(Root.prototype);
+var extended = function(Child, Base) {
+    Child.prototype = Object.create(Base.prototype);
+    Child.parentClass = Base.prototype;
+}
+
+extended(Child, Root);
 
 Root.prototype.run = function() {
     console.log('Root. Run...');
