@@ -5,8 +5,9 @@ var extended = function(Child, Base) {
     Child.prototype = Object.create(Base.prototype);
     Child.prototype.parentClass = Base.prototype;
 }
-var __super = function() {
-    this.parentClass.run();
+
+var __super = function(name) {
+    this.parentClass[name]();
 }
 
 extended(Child, Root);
@@ -15,8 +16,7 @@ Root.prototype.run = function() {
     console.log('Root. Run...');
 };
 Child.prototype.run = function() {
-    //Root.prototype.run(this, arguments);
-    __super.call(this)
+    __super.call(this, 'run');
     console.log('Child. Run...');
 };
 
