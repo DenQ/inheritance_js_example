@@ -5,28 +5,31 @@ var Child1 = function() {};
 var extended = function(Child, Base) {
     Child.prototype = Object.create(Base.prototype);
     Child.prototype.parentClass = Base.prototype;
+    Child.prototype.super = function () {
+        var __obj = Child.prototype.parentClass;
+        var __key = null;
+        for (__key in __obj) ;
+        Child.prototype.parentClass[__key]();
+    }
 };
 
-var __super = function(name) {
-    this.parentClass[name]();
-};
-
-extended(Child, Root);
 
 Root.prototype.run = function() {
     console.log('Root. Run...');
 };
+
+
+extended(Child, Root);
 Child.prototype.run = function() {
-    __super.call(this, 'run');
+    this.super();
     console.log('Child. Run...');
 };
 
 extended(Child1, Child);
 Child1.prototype.run = function() {
-    __super.call(this, 'run');
+    this.super();
     console.log('Child1. Run...');
 };
 
-var child1 = new Child1();
-child1.run();
-
+var child = new Child1();
+child.run();
